@@ -1,0 +1,9 @@
+Package: com.binni.backup
+Name: AppDataBackupRestore
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Backup and restore your app data
+Maintainer: Choco&binni
+Author: Choco&binni
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
