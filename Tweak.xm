@@ -20,7 +20,7 @@ NSString *tmp = NSTemporaryDirectory();
 // Method to display options for backup or restore
 - (void)showBackupRestoreOptions {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Backup/Restore"
-                                                                             message:@"This tweak can backup and restore your app data.\n\nPlease inject this tweak only if you want to backup or restore your app data to aviod problems. After you have created or restored the backup, remove the tweak again.\n\nmade by Chocolate Fluffy and binnichtaktiv"
+                                                                             message:@"This tweak can backup and restore your app data.\n\nPlease inject this tweak only if you want to backup or restore your app data to aviod problems. After you have created or restored your backup, remove the tweak again.\n\nmade by Chocolate Fluffy and binnichtaktiv ❤️"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
 
     UIAlertAction *backupAction = [UIAlertAction actionWithTitle:@"Backup" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
