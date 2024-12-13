@@ -17,26 +17,34 @@ NSString *tmp = NSTemporaryDirectory();
     [self showBackupRestoreOptions];
 }
 	
-// Method to display options for backup or restore
 - (void)showBackupRestoreOptions {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Backup/Restore"
-                                                                             message:@"This tweak can backup and restore your app data.\n\nPlease inject this tweak only if you want to backup or restore your app data to aviod problems. After you have created or restored your backup, remove the tweak again.\n\nmade by Chocolate Fluffy and binnichtaktiv ❤️"
+                                                                             message:@"This tweak can backup and restore your app data.\n\nPlease inject this tweak only if you want to backup or restore your app data to avoid problems. After you have created or restored your backup, remove the tweak again.\n\nmade by Chocolate Fluffy and binnichtaktiv ❤️"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
 
     UIAlertAction *backupAction = [UIAlertAction actionWithTitle:@"Backup" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self backupImportantDirectories];
     }];
+    
     UIAlertAction *restoreAction = [UIAlertAction actionWithTitle:@"Restore" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self restoreBackup];
     }];
 	 
-	 UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss"
+    UIAlertAction *donateAction = [UIAlertAction actionWithTitle:@"Donate" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://binnichtaktiv.github.io/donate"] options:@{} completionHandler:nil];
+    }];
+    
+    // Ändern Sie die Farbe des Donate-Buttons zu Grün
+    [donateAction setValue:[UIColor greenColor] forKey:@"titleTextColor"];
+	 
+    UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss"
 	     style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 			  [self dismissViewControllerAnimated:YES completion:nil];
 	 }];
     
     [alertController addAction:backupAction];
     [alertController addAction:restoreAction];
+    [alertController addAction:donateAction];
 	 [alertController addAction:dismissAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -96,14 +104,14 @@ NSString *tmp = NSTemporaryDirectory();
                     UIDocumentPickerViewController *documentPicker = [[UIDocumentPickerViewController alloc] initWithURL:zipURL inMode:UIDocumentPickerModeExportToService];
                     [self presentViewController:documentPicker animated:YES completion:nil];
                 } else {
-                    [self showAlertWithTitle:@"Failed" message:@"Failed to zip. Sorry 🥺"];
+                    [self showAlertWithTitle:@"Failed" message:@"failed to zip. sorry 🥺"];
                 }
             });
         } else {
             // Handle failure to zip individual directories
             dispatch_async(dispatch_get_main_queue(), ^{
                 [hud dismiss];
-                [self showAlertWithTitle:@"Failed" message:@"Failed to zip directories. Sorry 🥺"];
+                [self showAlertWithTitle:@"Failed" message:@"failed to zip directories. sorry 🥺"];
             });
         }
     });
@@ -145,7 +153,7 @@ NSString *tmp = NSTemporaryDirectory();
         BOOL isCreated = [fileManager createDirectoryAtPath:tempDirectory withIntermediateDirectories:YES attributes:nil error:&error];
         if (!isCreated) {
             NSLog(@"Failed to create temp directory: %@", error.localizedDescription);
-            [self showAlertWithTitle:@"Error" message:@"Failed to create temporary directory."];
+            [self showAlertWithTitle:@"Error" message:@"failed to create temporary directory"];
             return;
         }
     }
@@ -165,7 +173,7 @@ NSString *tmp = NSTemporaryDirectory();
             NSLog(@"Error Unzipping Main File: %@", error.localizedDescription);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [hud dismiss];
-                [self showAlertWithTitle:@"Error" message:@"Failed to unzip the main file."];
+                [self showAlertWithTitle:@"Error" message:@"failed to unzip the main file"];
             });
             return;
         }
@@ -237,7 +245,7 @@ NSString *tmp = NSTemporaryDirectory();
      
         dispatch_async(dispatch_get_main_queue(), ^{
             [hud dismiss];
-            [self showAlertWithTitle:@"Success" message:@"Restored Successfully. Restart The App"];
+            [self showAlertWithTitle:@"Success" message:@"restored successfully🤑. restart the app"];
             NSLog(@"Restore completed successfully.");
         });
     });
